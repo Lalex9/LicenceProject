@@ -5,7 +5,6 @@ import alex.lungu.LicenseProject.dto.PurchaseResponse;
 import alex.lungu.LicenseProject.service.CheckoutService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/checkout")
 public class CheckoutController {

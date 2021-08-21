@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
-@CrossOrigin
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findProductById(Long id);
