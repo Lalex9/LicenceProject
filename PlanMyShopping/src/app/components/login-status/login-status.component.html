@@ -1,17 +1,26 @@
 <div class="login-status-header">
-    <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
+    <!-- <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
         Welcome {{ userFullName }}!
-    </div>
+    </div> -->
 
     <button *ngIf="!isAuthenticated" routerLink="/login" class="security-btn">
         Login
     </button>
 
-    <button *ngIf="isAuthenticated" (click)="logOut()" class="security-btn">
-        Logout
-    </button>
-
-    <button *ngIf="isAuthenticated" routerLink="/subscriptions"  class="security-btn ml-1">
-        Subscriptions
-    </button>
+    <ng-container *ngIf="isAuthenticated" class="ml-10">
+        <div class="row">
+            <div class="col">
+                <div ngbDropdown class="d-inline-block">
+                    <button class="security-btn" id="dropdownBasic1" ngbDropdownToggle>Welcome {{ userFullName
+                        }}!</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem routerLink="/customer-details">Account details</button>
+                        <button ngbDropdownItem routerLink="/subscriptions">My Subscriptions</button>
+                        <button ngbDropdownItem routerLink="/order-history">Orders History</button>
+                        <button ngbDropdownItem (click)="logOut()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
 </div>

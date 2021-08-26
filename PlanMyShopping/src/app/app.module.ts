@@ -30,6 +30,10 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './common/loading-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 
 const oktaConfig = Object.assign({
   onAuthRequired: (injector) => {
@@ -40,6 +44,7 @@ const oktaConfig = Object.assign({
 }, myAppConfig.oidc);
 
 const routes: Routes = [
+  {path: 'customer-details', component: CustomerDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'subscriptions/:id', component: SubscriptionDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'subscriptions', component: SubscriptionComponent, canActivate: [OktaAuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard]},
@@ -69,7 +74,8 @@ const routes: Routes = [
     LoginStatusComponent,
     OrderHistoryComponent,
     SubscriptionComponent,
-    SubscriptionDetailsComponent
+    SubscriptionDetailsComponent,
+    CustomerDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -77,9 +83,12 @@ const routes: Routes = [
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    OktaAuthModule
+    OktaAuthModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
-  providers: [ProductService, {provide: OKTA_CONFIG, useValue: oktaConfig}, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [ProductService, {provide: OKTA_CONFIG, useValue: oktaConfig}, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+              {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

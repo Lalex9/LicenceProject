@@ -25,6 +25,7 @@
     "@okta/okta-angular": "^3.2.2",
     "@okta/okta-signin-widget": "^5.9.4",
     "bootstrap": "^5.1.0",
+    "ngx-spinner": "^8.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
