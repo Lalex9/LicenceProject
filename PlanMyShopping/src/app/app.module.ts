@@ -28,6 +28,8 @@ import {
 import myAppConfig from './config/my-app-config';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
+import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 
 const oktaConfig = Object.assign({
   onAuthRequired: (injector) => {
@@ -38,6 +40,8 @@ const oktaConfig = Object.assign({
 }, myAppConfig.oidc);
 
 const routes: Routes = [
+  {path: 'subscriptions/:id', component: SubscriptionDetailsComponent, canActivate: [OktaAuthGuard]},
+  {path: 'subscriptions', component: SubscriptionComponent, canActivate: [OktaAuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard]},
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
@@ -45,8 +49,8 @@ const routes: Routes = [
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
   {path: 'search/:keyword', component: ProductListComponent},
-  {path: 'category/:id', component: ProductListComponent},
-  {path: 'category', component: ProductListComponent},
+  {path: 'store/:id', component: ProductListComponent},
+  {path: 'store', component: ProductListComponent},
   {path: 'products', component: ProductListComponent},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', redirectTo: '/products', pathMatch: 'full'}
@@ -63,7 +67,9 @@ const routes: Routes = [
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    SubscriptionComponent,
+    SubscriptionDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

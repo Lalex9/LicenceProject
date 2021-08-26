@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../common/product';
 import { map } from 'rxjs/operators';
-import { ProductCategory } from '../common/product-category';
+import { ProductStore } from '../common/product-store';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
 
   private baseUrl = environment.planMyShoppingApiUrl + '/products';
-  private categoryUrl = environment.planMyShoppingApiUrl + '/categories';
+  private storeUrl = environment.planMyShoppingApiUrl + '/stores';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -28,20 +28,20 @@ export class ProductService {
     );
   }
 
-  getProductList(categoryId: number) : Observable<Product[]> {
-    const searchUrl =`${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+  getProductList(storeId: number) : Observable<Product[]> {
+    const searchUrl =`${this.baseUrl}/search/findByStoreId?id=${storeId}`;
     
     return this.getProducts(searchUrl);
   }
   
-  getProductCategories() : Observable<ProductCategory[]> {
-    return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
-      map(response => response._embedded.categories)
+  getProductStores() : Observable<ProductStore[]> {
+    return this.httpClient.get<GetResponseProductStore>(this.storeUrl).pipe(
+      map(response => response._embedded.stores)
     );
   }
 
-  getProductListPaginate(page: number, pageSize: number, categoryId: number) : Observable<GetResponseProducts> {
-    const searchUrl =`${this.baseUrl}/search/findByCategoryId?id=${categoryId}` + `&page=${page}&size=${pageSize}`;
+  getProductListPaginate(page: number, pageSize: number, storeId: number) : Observable<GetResponseProducts> {
+    const searchUrl =`${this.baseUrl}/search/findByStoreId?id=${storeId}` + `&page=${page}&size=${pageSize}`;
     
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
@@ -71,8 +71,8 @@ interface GetResponseProducts {
   }
 }
 
-interface GetResponseProductCategory {
+interface GetResponseProductStore {
   _embedded : {
-    categories: ProductCategory[];
+    stores: ProductStore[];
   }
 }

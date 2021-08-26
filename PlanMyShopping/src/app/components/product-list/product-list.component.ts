@@ -13,8 +13,8 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
 
   products : Product[] = [];
-  currentCategoryId: number = 1;
-  previousCategoryId: number = 1;
+  currentStoreId: number = 1;
+  previousStoreId: number = 1;
   searchMode: boolean = false;
 
   pageNumber: number = 1;
@@ -54,21 +54,21 @@ export class ProductListComponent implements OnInit {
   }
 
   handleListProducts() {
-    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+    const hasStoreId: boolean = this.route.snapshot.paramMap.has('id');
 
-    if (hasCategoryId) {
-      this.currentCategoryId = +this.route.snapshot.paramMap.get('id');
+    if (hasStoreId) {
+      this.currentStoreId = +this.route.snapshot.paramMap.get('id');
     } else {
-      this.currentCategoryId = 1;
+      this.currentStoreId = 1;
     }
     
-    if (this.previousCategoryId != this.currentCategoryId) {
+    if (this.previousStoreId != this.currentStoreId) {
       this.pageNumber = 1;
     }
 
-    this.previousCategoryId = this.currentCategoryId;
+    this.previousStoreId = this.currentStoreId;
 
-    this.productService.getProductListPaginate(this.pageNumber - 1, this.pageSize, this.currentCategoryId).subscribe(this.processResult());
+    this.productService.getProductListPaginate(this.pageNumber - 1, this.pageSize, this.currentStoreId).subscribe(this.processResult());
   }
 
   processResult() {

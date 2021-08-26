@@ -7,18 +7,18 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="category")
+@Table(name="store")
 @Getter
 @Setter
-public class Category {
+public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "category_name")
-    private String categoryName;
+    @Column(name = "store_name")
+    private String storeName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private Set<Product> products;
 }
