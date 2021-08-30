@@ -34,6 +34,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './common/loading-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 const oktaConfig = Object.assign({
   onAuthRequired: (injector) => {
@@ -47,6 +48,7 @@ const routes: Routes = [
   {path: 'customer-details', component: CustomerDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'subscriptions/:id', component: SubscriptionDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'subscriptions', component: SubscriptionComponent, canActivate: [OktaAuthGuard]},
+  {path: 'order-history/:id', component: OrderDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard]},
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
@@ -75,7 +77,8 @@ const routes: Routes = [
     OrderHistoryComponent,
     SubscriptionComponent,
     SubscriptionDetailsComponent,
-    CustomerDetailsComponent
+    CustomerDetailsComponent,
+    OrderDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

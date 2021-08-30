@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
 
   private baseUrl = environment.planMyShoppingApiUrl + '/products';
-  private storeUrl = environment.planMyShoppingApiUrl + '/stores';
+  private storeUrl = environment.planMyShoppingApiUrl + '/store';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -28,14 +28,13 @@ export class ProductService {
     );
   }
 
-  getProductList(storeId: number) : Observable<Product[]> {
-    const searchUrl =`${this.baseUrl}/search/findByStoreId?id=${storeId}`;
-    
-    return this.getProducts(searchUrl);
+  getProductStoreForProductId(productId: string): Observable<number> {
+    const storeIdUrl =  `${this.storeUrl}/${productId}`;
+    return this.httpClient.get<number>(storeIdUrl);
   }
   
   getProductStores() : Observable<ProductStore[]> {
-    return this.httpClient.get<GetResponseProductStore>(this.storeUrl).pipe(
+    return this.httpClient.get<GetResponseProductStore>(this.storeUrl + 's').pipe(
       map(response => response._embedded.stores)
     );
   }

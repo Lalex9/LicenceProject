@@ -28,7 +28,7 @@ public class Subscription {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subscription")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subscription", fetch=FetchType.EAGER)
     private Set<SubscriptionItem> subscriptionItems = new HashSet<>();
 
     @Column(name="order_date")

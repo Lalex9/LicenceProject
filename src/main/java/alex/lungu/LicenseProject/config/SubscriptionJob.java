@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Configuration
 @EnableScheduling
@@ -20,6 +22,16 @@ public class SubscriptionJob {
 //    @Scheduled(cron = "0 0 0/1 * * ?")
     @Scheduled(cron = "0 * * * * *")
     public void launchAllSubscriptions() {
-//        subscriptionService.launchOrders();
+        placeOrderForSubscriptions();
+    }
+
+    @Transactional
+    public void placeOrderForSubscriptions() {
+        List<Subscription> subscriptions = subscriptionService.getAllSubscriptions();
+        for (Subscription subscription: subscriptions) {
+            if (subscription.getOrderDate().before(new Date(System.currentTimeMillis()))){
+                subscriptionService.createOrder(subscription, true);
+            }
+        }
     }
 }

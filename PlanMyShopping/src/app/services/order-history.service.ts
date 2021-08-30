@@ -17,6 +17,12 @@ export class OrderHistoryService {
 
     return this.httpClient.get<GetResponseOrderHistory>(orderHistoryUrl);
   }
+
+  getOrderHistoryItem(id: string): Observable<OrderHistory> {
+    const orderHistoryUrl = `${this.orderUrl}/${id}`;
+
+    return this.httpClient.get<OrderHistory>(orderHistoryUrl);
+  }
 }
 
 interface GetResponseOrderHistory {

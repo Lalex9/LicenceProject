@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'src/app/common/subscription';
 import { SubscriptionItem } from 'src/app/common/subscription-item';
 import { SubscriptionService } from 'src/app/services/subscription.service';
@@ -15,12 +15,17 @@ export class SubscriptionDetailsComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private subscriptionService: SubscriptionService,  private route: ActivatedRoute) { }
+  constructor(private subscriptionService: SubscriptionService,  private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.handleSubscription();
-    })
+    });
+  }
+
+  orderNow(id: number) {
+    this.subscriptionService.orderNow(id);
+    this.router.navigateByUrl("/subscriptions");
   }
 
   handleSubscription() {
@@ -30,6 +35,7 @@ export class SubscriptionDetailsComponent implements OnInit {
       data => {
         this.subscription = data;
         this.calculateTotalPriceAndQuanity(data);
+        console.log(this.subscription);
       }
     )
   }

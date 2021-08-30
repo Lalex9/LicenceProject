@@ -46,9 +46,21 @@ public class SubscriptionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PostMapping("/new")
+    public ResponseEntity<SubscriptionDTO> getNewSubscription(@RequestParam("customerEmail") String customerEmail, @RequestParam("storeId") Long storeId) {
+        Subscription subscription = this.subscriptionService.getSubscription(customerEmail, storeId);
+        return new ResponseEntity<>(new SubscriptionDTO(subscription), HttpStatus.OK);
+    }
+
     @PostMapping("/update")
     public ResponseEntity<?> updateSubscription(@RequestBody SubscriptionUpdate subscriptionUpdate) {
         subscriptionService.updateSubscription(subscriptionUpdate);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<?> placeOrderFromSubscription(@RequestParam("subscriptionId") Long subscriptionId) {
+        subscriptionService.createOrder(subscriptionId, false);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

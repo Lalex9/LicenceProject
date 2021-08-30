@@ -20,6 +20,9 @@ public class SubscriptionItem {
     @Column(name="image_url")
     private String imageUrl;
 
+    @Column(name="name")
+    private String name;
+
     @Column(name="unit_price")
     private BigDecimal unitPrice;
 

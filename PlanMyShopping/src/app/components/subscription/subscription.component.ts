@@ -31,15 +31,12 @@ export class SubscriptionComponent implements OnInit {
 
   handleSubscriptions() {
     const email = JSON.parse(this.storage.getItem('userEmail'));
-    console.log(email);
 
     this.subscriptionService.getSubscriptions(email).subscribe(
       data => {
         this.subscriptions = data;
       }
     );
-
-    console.log(this.subscriptions);
   }
 
   getStoreName(storeId: number) {

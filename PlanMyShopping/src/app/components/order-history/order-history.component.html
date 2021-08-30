@@ -1,6 +1,6 @@
 
 <div class="main-content">
-    <div class="section-content section-content-p30">
+    <div class="panel ection-content section-content-p30">
         <div class="container-fluid">
             <h3>Your Orders</h3>
 
@@ -15,7 +15,9 @@
 
                     <tr *ngFor="let tempOrderHistory of orderHistoryList">
                         <td>
-                            {{ tempOrderHistory.orderTrackingNumber }}
+                            <a routerLink="/order-history/{{ tempOrderHistory.id }}">
+                                {{ tempOrderHistory.orderTrackingNumber }}
+                            </a>
                         </td>
                         <td>
                             {{ tempOrderHistory.totalPrice | currency: 'RON' }}
