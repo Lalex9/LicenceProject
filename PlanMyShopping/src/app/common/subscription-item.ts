@@ -1,9 +1,10 @@
+import { Image } from "./image";
 import { Product } from "./product";
 
 export class SubscriptionItem {
     id: string;
     name: string;
-    imageUrl: string;
+    imageUrl: Image;
     unitPrice: number;
     quantity: number;
     productId: string;

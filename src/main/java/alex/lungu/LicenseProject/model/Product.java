@@ -1,5 +1,6 @@
 package alex.lungu.LicenseProject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,10 +23,17 @@ public class Product {
     @Column(name = "unit_price")
     private String unitPrice;
 
-    @Column(name = "image_url")
-    private String imageURL;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_url", referencedColumnName = "id")
+    private Image imageURL;
 
     @ManyToOne
-    @JoinColumn(name = "store_id", nullable = false)
+    @JoinColumn(name = "store_id")
     private Store store ;
+
+
+    @JsonBackReference
+    public Store getStore() {
+        return this.store;
+    }
 }

@@ -12,7 +12,7 @@
                     <tr *ngFor="let subscriptionItem of subscription.subscriptionItems">
                         <td>
                             <div class="card-img-top">
-                                <img src="{{ subscriptionItem.imageUrl }}" class="img-responsive">
+                                <img [src]="getImageFromItem(subscriptionItem)" class="img-responsive">
                             </div>
                         </td>
                         <td>

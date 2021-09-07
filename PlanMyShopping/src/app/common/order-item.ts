@@ -1,7 +1,8 @@
 import { CartItem } from "./cart-item";
+import { Image } from "./image";
 
 export class OrderItem {
-    imageUrl: string;
+    imageUrl: Image;
     unitPrice: number;
     quantity: number;
     productId: string;

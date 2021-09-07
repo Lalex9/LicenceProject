@@ -35,6 +35,7 @@ import { LoadingInterceptor } from './common/loading-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { NewProductComponent } from './components/new-product/new-product.component';
 
 const oktaConfig = Object.assign({
   onAuthRequired: (injector) => {
@@ -45,6 +46,7 @@ const oktaConfig = Object.assign({
 }, myAppConfig.oidc);
 
 const routes: Routes = [
+  {path: 'add-product', component: NewProductComponent, canActivate: [OktaAuthGuard]},
   {path: 'customer-details', component: CustomerDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'subscriptions/:id', component: SubscriptionDetailsComponent, canActivate: [OktaAuthGuard]},
   {path: 'subscriptions', component: SubscriptionComponent, canActivate: [OktaAuthGuard]},
@@ -78,7 +80,8 @@ const routes: Routes = [
     SubscriptionComponent,
     SubscriptionDetailsComponent,
     CustomerDetailsComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    NewProductComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

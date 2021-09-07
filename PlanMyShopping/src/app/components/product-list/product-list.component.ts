@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CartItem } from 'src/app/common/cart-item';
+import { Observable } from 'rxjs';
+import { Image } from 'src/app/common/image';
 import { Product } from 'src/app/common/product';
 import { Subscription } from 'src/app/common/subscription';
 import { SubscriptionItem } from 'src/app/common/subscription-item';
+import { AdminService } from 'src/app/services/admin.service';
 import { CartService } from 'src/app/services/cart.service';
+import { ImageService } from 'src/app/services/image.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 
@@ -14,10 +17,12 @@ import { SubscriptionService } from 'src/app/services/subscription.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+  isAdmin: boolean = false;
   
   storage: Storage = localStorage;
 
   products : Product[] = [];
+  images: Map<Product, Image> = new Map();
   currentStoreId: number = 1;
   previousStoreId: number = 1;
   searchMode: boolean = false;
@@ -28,12 +33,20 @@ export class ProductListComponent implements OnInit {
 
   previousKeyword: string = null;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, private cartService: CartService, private subscriptionService: SubscriptionService) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, private cartService: CartService, private subscriptionService: SubscriptionService, private adminService: AdminService, private imageService: ImageService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.listProducts();
     });
+    const email = JSON.parse(this.storage.getItem('userEmail'));
+    if (email != null) {
+      this.adminService.isAdmin(email).subscribe(
+        result => {
+          this.isAdmin = result;
+        }
+      )
+    }
   }
 
   listProducts() {
@@ -45,6 +58,7 @@ export class ProductListComponent implements OnInit {
       this.handleListProducts();
     }
   }
+
 
   handleSearchProducts() {
     const searchKeyword: string = this.route.snapshot.paramMap.get('keyword');
@@ -82,7 +96,19 @@ export class ProductListComponent implements OnInit {
       this.pageNumber = data.page.number + 1;
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
+      for (let product of this.products) {
+        this.imageService.getImage(product.id).subscribe(
+          image => {
+            this.images.set(product, image);
+          }
+        );
+      }
     }
+  }
+
+  getImageFromProduct(product: Product): string {
+    let image = this.images.get(product);
+    return `data:${image.type};base64,${image.data}`;
   }
 
   updatePageSize(pageSize: number) {
@@ -126,3 +152,4 @@ export class ProductListComponent implements OnInit {
     
   }
 }
+

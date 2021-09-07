@@ -19,7 +19,6 @@ public class SubscriptionJob {
         this.subscriptionService = subscriptionService;
     }
 
-//    @Scheduled(cron = "0 0 0/1 * * ?")
     @Scheduled(cron = "0 * * * * *")
     public void launchAllSubscriptions() {
         placeOrderForSubscriptions();

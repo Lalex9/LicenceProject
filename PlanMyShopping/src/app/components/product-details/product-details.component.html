@@ -5,11 +5,14 @@
             <br />
 
             <div class="general-info">
-                <img src="{{ product.imageURL }}" class="detail-img">
+                <img src="{{ imageUrl }}" class="detail-img">
                 <div>
                     <h3> {{ product.name }} </h3>
                     <div class="price">{{ product.unitPrice | currency:'RON' }}</div>
-                    <button (click)="addToCart()" class="btn btn-primary btn-sm mt-1">Add to cart</button>
+                    <button (click)="addToSubscription(product)" class="btn btn-primary btn-sm mt-1">Add to subscription</button>
+                    <div *ngIf="isAdmin">
+                        <button (click)="deleteProduct(product.id)" class="btn btn-primary btn-sm mt-1">Delete Product</button>
+                    </div>
                 </div>
             </div>
 

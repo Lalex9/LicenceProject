@@ -45,8 +45,9 @@ export class SubscriptionService {
     let productExistsInSubscription: boolean = false;
     let existingSubscriptionItem: SubscriptionItem = undefined;
 
+    console.log(subscription.subscriptionItems);
     if (subscription.subscriptionItems.length > 0) {
-      existingSubscriptionItem = subscription.subscriptionItems.find(tempSubscriptionItem => tempSubscriptionItem.id === subscriptionItem.id);
+      existingSubscriptionItem = subscription.subscriptionItems.find(tempSubscriptionItem => tempSubscriptionItem.productId === subscriptionItem.productId);
 
       productExistsInSubscription = (existingSubscriptionItem != undefined);
     }

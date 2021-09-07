@@ -2,11 +2,11 @@ package alex.lungu.LicenseProject.service;
 
 import alex.lungu.LicenseProject.exception.ElementNotFoundException;
 import alex.lungu.LicenseProject.model.Product;
-import alex.lungu.LicenseProject.model.User;
 import alex.lungu.LicenseProject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -34,6 +34,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    @Transactional
     public void deleteProduct(Long id) {
         productRepository.deleteProductById(id);
     }

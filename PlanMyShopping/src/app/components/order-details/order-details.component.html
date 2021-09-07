@@ -12,7 +12,7 @@
                     <tr *ngFor="let item of order.orderItems">
                         <td>
                             <div class="card-img-top">
-                                <img src="{{ item.imageUrl }}" class="img-responsive">
+                                <img [src]="getImageFromItem(item)" class="img-responsive">
                             </div>
                         </td>
                         <td>
