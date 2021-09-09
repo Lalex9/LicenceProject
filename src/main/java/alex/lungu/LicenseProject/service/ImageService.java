@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -35,6 +36,7 @@ public class ImageService {
     }
 
     public Image getImageFromProductId(Long productId) {
-        return productRepository.findProductById(productId).get().getImageURL();
+        Optional<Product> productOp = productRepository.findProductById(productId);
+        return productOp.map(Product::getImageURL).orElse(null);
     }
 }

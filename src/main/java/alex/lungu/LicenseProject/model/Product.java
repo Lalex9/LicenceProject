@@ -23,7 +23,7 @@ public class Product {
     @Column(name = "unit_price")
     private String unitPrice;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "image_url", referencedColumnName = "id")
     private Image imageURL;
 
@@ -36,4 +36,7 @@ public class Product {
     public Store getStore() {
         return this.store;
     }
+
+    @JsonBackReference
+    public Image getImage() { return this.imageURL; }
 }

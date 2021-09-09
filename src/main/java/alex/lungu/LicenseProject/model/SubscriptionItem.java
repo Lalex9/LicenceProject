@@ -17,7 +17,7 @@ public class SubscriptionItem {
     @Column(name="id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "image_url", referencedColumnName = "id")
     private Image imageUrl;
 

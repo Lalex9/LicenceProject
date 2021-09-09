@@ -169,6 +169,7 @@ public class SubscriptionService {
         for (SubscriptionItem oldItem : oldSubscription.getSubscriptionItems()) {
             SubscriptionItem newItem = new SubscriptionItem();
             newItem.setSubscription(subscription);
+            newItem.setName(oldItem.getName());
             newItem.setImageUrl(oldItem.getImageUrl());
             newItem.setQuantity(oldItem.getQuantity());
             newItem.setUnitPrice(oldItem.getUnitPrice());
